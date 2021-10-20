@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="SIGNUP FORM"
+            android:textColor="@android:color/black"
+            android:textSize="50sp"
+            android:textStyle="italic">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:hint="Enter Your Name :"
+            android:textColorHint="@android:color/black"
+            android:textSize="20dp"></EditText>
+
+        <RadioGroup
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textSize="20dp">
+
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:textSize="20dp">
+
+            </RadioButton>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:hint="Enter Your Email :"
+            android:textColorHint="@android:color/black"
+            android:textSize="20dp">
+
+
+        </EditText>
+
+<!--        <Button-->
+<!--            android:id="@+id/show"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:text="Show Date Picker"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:layout_height="wrap_content" />-->
+
+        <AutoCompleteTextView
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:hint="Enter Your Country"
+            android:textColorHint="@android:color/black">
+
+        </AutoCompleteTextView>
+
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:hint="Create Your Password :"
+            android:inputType="textPassword"
+            android:textColorHint="@android:color/black"
+            android:textSize="20dp">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/confirmpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:hint="Confirm Your Password :"
+            android:textColorHint="@android:color/black"
+            android:textSize="20dp">
+
+        </EditText>
+
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:buttonTint="@android:color/holo_red_dark"
+            android:text="I agree to Terms and Condition !"
+            android:textSize="20sp">
+
+        </CheckBox>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="25dp"
+            android:background="@android:color/holo_green_dark"
+            android:text="Submit"
+            android:textSize="30dp"
+            android:textStyle="bold">
+
+        </Button>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="OR"
+            android:textSize="25dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="25dp"
+            android:background="@android:color/holo_blue_dark"
+            android:text="LOG IN HERE"
+            android:textSize="25dp"
+            android:textStyle="bold">
+
+        </Button>
+
+
+    </LinearLayout>
+</ScrollView>
+
