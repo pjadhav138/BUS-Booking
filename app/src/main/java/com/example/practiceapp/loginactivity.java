@@ -38,6 +38,7 @@ public class loginactivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 list = preferences.getString("UserDetails", "{}");
+                //changes done
                 try {
                     Userdetailslist = new JSONObject(list);
                     if (Userdetailslist.has(email.getText().toString())) {
