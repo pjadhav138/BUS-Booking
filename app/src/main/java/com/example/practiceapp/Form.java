@@ -40,7 +40,6 @@ public class Form extends AppCompatActivity {
     JSONObject Userdetails;
     JSONObject Userdetailslist;
     boolean terms = false;
-    JSONObject timeing;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 //    ProgressBar progressbar;
@@ -70,11 +69,6 @@ public class Form extends AppCompatActivity {
         checkBox = findViewById(R.id.checkbox);
 
 
-        try {
-            timeing = new JSONObject("{\"bus_timings\":{\"20-10-2021\":[\"10:10 A\",\"10:30 A\",\"11:00 A\",\"2:00 P\",\"6:00 P\",\"6:15 P\",\"7:00 P\",\"7:15 P\"],\"21-10-2021\":[\"10:10 A\",\"10:30 A\",\"11:00 A\",\"2:00 P\",\"6:00 P\",\"6:15 P\",\"7:00 P\",\"7:15 P\"],\"22-10-2021\":[\"10:10 A\",\"10:30 A\",\"11:00 A\",\"2:00 P\",\"6:00 P\",\"6:15 P\",\"7:00 P\",\"7:15 P\"],\"23-10-2021\":[\"10:10 A\",\"10:30 A\",\"11:00 A\",\"6:15 P\",\"7:00 P\",\"7:15 P\"]}}");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 /*
         show.setOnClickListener(new View.OnClickListener() {
