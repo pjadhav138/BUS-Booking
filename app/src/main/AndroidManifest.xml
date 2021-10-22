@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".date_time"></activity>
+        <activity
+            android:name=".Select_bus"
+            android:exported="true" />
+        <activity
+            android:name=".Form"
+            android:exported="true" />
+        <activity android:name=".date_time" />
         <activity
             android:name=".loginactivity"
             android:exported="true" />
@@ -17,7 +23,7 @@
             android:name=".Home"
             android:exported="true" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Form">
+        <activity android:name=".splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

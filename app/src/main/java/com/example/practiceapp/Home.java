@@ -26,7 +26,7 @@ public class Home extends AppCompatActivity {
     ImageView logout;
     Button next;
     String[] sourcelist = {"Select Source","Thane", "Mulund", "Bhandup", "Kanjur", "Vikroli", "Powai"};
-    String[] destinationlist = {"Select Destination","Thane", "Mulund", "Bhandup", "Kanjur", "Vikroli", "Powai"};
+ //   String[] destinationlist = {"Select Destination","Thane", "Mulund", "Bhandup", "Kanjur", "Vikroli", "Powai"};
 SharedPreferences preferences;
 SharedPreferences.Editor editor;
     @Override
