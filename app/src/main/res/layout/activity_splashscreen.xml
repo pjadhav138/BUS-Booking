@@ -16,6 +16,20 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/companyname"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Swift Ride"
+        android:textSize="50dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-black">
+    </TextView>
+
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Welcome"

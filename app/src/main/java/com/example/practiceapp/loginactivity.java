@@ -46,9 +46,10 @@ public class loginactivity extends AppCompatActivity {
                         String passsaved = UserDetails.getString("Password");
                         String passedittext = password.getText().toString();
                         if (passsaved.equals(passedittext)) {
+                            editor.putString("User_Id",email.getText().toString());
                             editor.putBoolean("Is_login",true);
                             editor.commit();
-                            Intent Home = new Intent(loginactivity.this, Home.class);
+                            Intent Home = new Intent(loginactivity.this, HomeMain.class);
                             startActivity(Home);
                             finish();
                         } else {

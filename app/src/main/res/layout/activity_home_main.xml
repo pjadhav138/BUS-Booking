@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeMain">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <TextView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Swift Ride"
+            android:textSize="50dp"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_dark">
+        </TextView>
+
+
+
+    </Toolbar>
+
+    <Button
+        android:id="@+id/book_now"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="Book  Now">
+    </Button>
+
+    <Button
+        android:id="@+id/view_booking"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="View Bookings">
+    </Button>
+
+
+
+
+
+
+</LinearLayout>

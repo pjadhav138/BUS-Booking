@@ -38,7 +38,6 @@ public class Form extends AppCompatActivity {
     String[] array = {"India", "USA", "Russia", "China", "Japan", "Shri Lanka"};
     JSONObject genderObj;
     JSONObject Userdetails;
-    JSONObject Userdetailslist;
     boolean terms = false;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -52,12 +51,11 @@ public class Form extends AppCompatActivity {
         editor = preferences.edit();
         boolean isloggedIn = preferences.getBoolean("Is_login", false);
         if (isloggedIn) {
-            startActivity(new Intent(Form.this, Home.class));
+            startActivity(new Intent(Form.this, HomeMain.class));
             finish();
         }
         genderObj = new JSONObject();
         Userdetails = new JSONObject();
-        Userdetailslist = new JSONObject();
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
 //        show = findViewById(R.id.show);
@@ -192,13 +190,14 @@ public class Form extends AppCompatActivity {
                         Userdetails.put("Password", password.getText().toString());
                         Userdetails.put("Terms and condition :", terms);
 
-                        Userdetailslist.put(email.getText().toString(), Userdetails);
-                        Log.e("FORM", "onCreate: " + Userdetailslist.toString());
-
                         SharedPreferences preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("UserDetails", Userdetailslist.toString());
+                        String registerdat = preferences.getString("UserDetails","{}");
+                        JSONObject jsRegister = new JSONObject(registerdat);
+                        jsRegister.put(email.getText().toString(), Userdetails);
+                        editor.putString("UserDetails", jsRegister.toString());
                         editor.putBoolean("Is_login", true);
+                        editor.putString("User_Id",email.getText().toString());
                         editor.commit();
                         String s = preferences.getString("Userdetails", "{}");
 

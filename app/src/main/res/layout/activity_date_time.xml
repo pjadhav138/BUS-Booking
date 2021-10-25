@@ -104,13 +104,13 @@
 
 
     <Button
-        android:id="@+id/availability"
+        android:id="@+id/booknow"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="30dp"
         android:backgroundTint="@android:color/black"
-        android:text="Check Availability"
+        android:text="Book Now"
         android:textColor="@android:color/white"
         android:textSize="20dp"
         android:textStyle="bold">
