@@ -39,8 +39,8 @@ public class view_bookings extends AppCompatActivity {
         lists.add(obj3);
         ListItem obj4 = new ListItem("bhandup", "vikhroli", "29-10-2021", "AC Bus", "10:15 A");
         lists.add(obj4);
-        ListItem obj5 = new ListItem("bhandup", "vikhroli", "29-10-2021", "AC Bus", "10:15 A");
-        lists.add(obj5);
+//        ListItem obj5 = new ListItem("bhandup", "vikhroli", "29-10-2021", "AC Bus", "10:15 A");
+//        lists.add(obj5);
         ListAdapter adapter = new ListAdapter(view_bookings.this,R.layout.list_row,lists);
 
 
