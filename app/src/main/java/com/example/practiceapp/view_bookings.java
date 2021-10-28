@@ -44,6 +44,8 @@ public class view_bookings extends AppCompatActivity {
         ListAdapter adapter = new ListAdapter(view_bookings.this,R.layout.list_row,lists);
 
 
+
+
         listView.setAdapter(adapter);
 
 
