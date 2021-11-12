@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -16,6 +18,7 @@ import org.json.JSONObject;
 public class review_booking extends AppCompatActivity {
     TextView Logo, source, destination, selected_date, selected_bus, user_id, bustype;
     String bookings, User_id;
+    Button backtohome;
     JSONObject js_bookinglist;
     JSONArray js_bookings;
 
@@ -25,6 +28,7 @@ public class review_booking extends AppCompatActivity {
         setContentView(R.layout.activity_review_booking);
         js_bookings = new JSONArray();
         js_bookinglist = new JSONObject();
+        backtohome= findViewById(R.id.back_to_home);
 
         Logo = findViewById(R.id.logo);
         Typeface font = Typeface.createFromAsset(getAssets(), "Creepster-Regular.ttf");
@@ -64,6 +68,17 @@ public class review_booking extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        backtohome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backtohome = new Intent(review_booking.this, HomeMain.class);
+                startActivity(backtohome);
+                finish();
+            }
+        });
+
+
 
 
 

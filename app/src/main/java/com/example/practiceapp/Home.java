@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -23,23 +25,29 @@ import static android.content.ContentValues.TAG;
 public class Home extends AppCompatActivity {
 
     Spinner source, destination;
+    TextView Logo;
     ImageView logout;
     Button next;
     String[] sourcelist = {"Select Source","Thane", "Mulund", "Bhandup", "Kanjur", "Vikroli", "Powai"};
  //   String[] destinationlist = {"Select Destination","Thane", "Mulund", "Bhandup", "Kanjur", "Vikroli", "Powai"};
-SharedPreferences preferences;
-SharedPreferences.Editor editor;
+    SessionManage session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        preferences = getSharedPreferences("MyApp",MODE_PRIVATE);
-        editor = preferences.edit();
+
+        session = new SessionManage(Home.this);
+
 
         source = findViewById(R.id.source);
         logout = findViewById(R.id.logout);
         destination = findViewById(R.id.destination);
         next = findViewById(R.id.next);
+
+        Logo = findViewById(R.id.logo);
+        Typeface font = Typeface.createFromAsset(getAssets(), "Creepster-Regular.ttf");
+        Logo.setTypeface(font);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(Home.this, android.R.layout.simple_spinner_dropdown_item, sourcelist);
         source.setAdapter(adapter);
@@ -51,8 +59,7 @@ SharedPreferences.Editor editor;
             public void onClick(View v) {
                 startActivity(new Intent(Home.this,loginactivity.class));
                 finish();
-                editor.putBoolean("Is_login",false);
-                editor.commit();
+               session.setLoginStatus(false);
 
             }
         });

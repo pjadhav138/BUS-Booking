@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view_bookings">
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="cursive"
+            android:text="Your Bookings"
+            android:textAllCaps="true"
+            android:textSize="40dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"></TextView>
+
+
+    </Toolbar>
 
 <!--
     <androidx.recyclerview.widget.RecyclerView
@@ -13,8 +31,28 @@
         android:layout_height="wrap_content"/>
 -->
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/back"
+        android:layout_below="@+id/toolbar"
+        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
     <ListView
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/back"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
-</LinearLayout>
+        android:layout_height="wrap_content">
+
+    </ListView>
+    <Button
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"
+        android:text="Back to Home"></Button>
+
+</RelativeLayout>

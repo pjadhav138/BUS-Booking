@@ -13,9 +13,6 @@
         <activity android:name=".HomeMain" />
         <activity android:name=".review_booking" />
         <activity
-            android:name=".Select_bus"
-            android:exported="true" />
-        <activity
             android:name=".Form"
             android:exported="true" />
         <activity android:name=".date_time" />

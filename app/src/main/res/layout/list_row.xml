@@ -1,19 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:text="title"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:textSize="30sp"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/des"
-        android:textSize="18sp"
-        android:text="description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:visibility="gone"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/holo_blue_bright"
+            android:fontFamily="cursive"
+            android:gravity="center"
+            android:text="Your Bookings"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:visibility="gone"></TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark"
+            android:visibility="gone"></TextView>
+
+
+        <TextView
+            android:id="@+id/vb_date"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Date"
+            android:textSize="30sp"></TextView>
+
+        <TextView
+            android:id="@+id/vb_source"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Source"
+            android:textSize="25sp"></TextView>
+
+        <TextView
+            android:id="@+id/vb_destination"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Destination"
+            android:textSize="25sp"></TextView>
+
+        <TextView
+            android:id="@+id/vb_bustype"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Type of Bus"
+            android:textSize="25sp"></TextView>
+
+        <TextView
+            android:id="@+id/vb_bustime"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Bus Time"
+            android:textSize="25sp"></TextView>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/VB-backtohome_btn"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_red_dark"
+            android:text="Back To Home"
+            android:textColor="@android:color/white"></Button>
+
+
+    </LinearLayout>
+</ScrollView>

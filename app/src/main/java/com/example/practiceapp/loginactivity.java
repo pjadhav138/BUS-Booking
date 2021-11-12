@@ -18,26 +18,25 @@ public class loginactivity extends AppCompatActivity {
     EditText email, password;
     Button loginbtn, registerbtn;
     JSONObject Userdetailslist;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+SessionManage session;
     String list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new SessionManage(loginactivity.this);
         setContentView(R.layout.activity_loginactivity);
         email = findViewById(R.id.loginemailid);
         password = findViewById(R.id.loginpassword);
         loginbtn = findViewById(R.id.loginbtn);
         registerbtn = findViewById(R.id.registerbtn);
         Userdetailslist = new JSONObject();
-        preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        editor = preferences.edit();
+
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list = preferences.getString("UserDetails", "{}");
+                list = session.getUserDetails();
                 //changes done
                 try {
                     Userdetailslist = new JSONObject(list);
@@ -46,9 +45,7 @@ public class loginactivity extends AppCompatActivity {
                         String passsaved = UserDetails.getString("Password");
                         String passedittext = password.getText().toString();
                         if (passsaved.equals(passedittext)) {
-                            editor.putString("User_Id",email.getText().toString());
-                            editor.putBoolean("Is_login",true);
-                            editor.commit();
+                            session.addLoginStatus(email.getText().toString(),true);
                             Intent Home = new Intent(loginactivity.this, HomeMain.class);
                             startActivity(Home);
                             finish();
