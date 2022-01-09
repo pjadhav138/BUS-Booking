@@ -32,13 +32,16 @@
 -->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_above="@+id/back"
         android:layout_below="@+id/toolbar"
-        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
     <ListView
-        android:visibility="gone"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/back"
@@ -53,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:textAllCaps="false"
-        android:text="Back to Home"></Button>
+        android:text="Back to Home">
+    </Button>
 
 </RelativeLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ImageView
+        android:id="@+id/camera"
+        android:src="@drawable/ic_baseline_camera_alt_24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+    <ImageView
+        android:layout_marginLeft="50dp"
+        android:id="@+id/galary"
+        android:src="@drawable/ic_baseline_insert_photo_24"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+</LinearLayout>

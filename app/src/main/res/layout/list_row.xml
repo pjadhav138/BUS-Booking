@@ -85,6 +85,13 @@
             android:text="Bus Time"
             android:textSize="25sp"></TextView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_dark">
+        </TextView>
+
+
         <Button
             android:visibility="gone"
             android:id="@+id/VB-backtohome_btn"

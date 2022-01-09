@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_book_now"
+        android:title="Book Ride"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/menu_viewbooking"
+        android:title="View Bookings"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/menu_steps"
+        android:title="How to book ?"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/menu_contactus"
+        android:title="Contact Us"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/menu_aboutus"
+        android:title="About Us"
+        app:showAsAction="never"></item>
+
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="My Profile"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        app:showAsAction="never"></item>
+
+</menu>

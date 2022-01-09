@@ -2,6 +2,8 @@ package com.example.practiceapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -70,5 +72,31 @@ SessionManage session;
                 finish();
             }
         });
+
+
+        // on back pressed listener to prevent logout issue
+
+
+    }
+    
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(loginactivity.this);
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setMessage("Do you want to Exit?");
+        builder.create();
+        builder.show();
+
     }
 }

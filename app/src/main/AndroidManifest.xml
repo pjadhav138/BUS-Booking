@@ -2,14 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.practiceapp">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE" />
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+    <uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view_bookings"></activity>
+        <activity android:name=".Booking_Notification"></activity>
+        <activity android:name=".myprofile" />
+        <activity android:name=".sendmail" />
+        <activity android:name=".sendsms" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".contact_us" />
+        <activity android:name=".view_pager" />
+        <activity android:name=".view_bookings" />
         <activity android:name=".HomeMain" />
         <activity android:name=".review_booking" />
         <activity

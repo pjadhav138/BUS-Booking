@@ -4,25 +4,37 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <Toolbar
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="90dp">
+        android:layout_height="wrap_content"
+        android:background="@android:color/black">
+    </TextView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_height="60dp">
 
         <TextView
             android:id="@+id/logo"
+            android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Swift Ride"
-            android:textSize="50dp"
-            android:gravity="center"
+            android:textSize="40dp"
             android:textColor="@android:color/holo_red_dark">
         </TextView>
 
-
-
-    </Toolbar>
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black">
+    </TextView>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/book_now"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
@@ -34,6 +46,7 @@
     </Button>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/view_booking"
         android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
@@ -43,6 +56,22 @@
         android:textSize="40dp"
         android:text="View Bookings">
     </Button>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/view_pager"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="View Pager">
+    </Button>
+
+
+
+
 
 
 
