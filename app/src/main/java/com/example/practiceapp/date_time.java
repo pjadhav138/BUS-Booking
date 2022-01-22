@@ -40,7 +40,7 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 public class date_time extends AppCompatActivity {
-    Button selectdate, Booknow; //selecttime
+    Button selectdate, Booknow , Notification; //selecttime
     String source, destination;
     private String TAG = getClass().getSimpleName();
     String[] bustype = {"Select Bus Type", "AC Bus", "Non AC Bus"};
@@ -58,6 +58,7 @@ public class date_time extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
         Bustype = findViewById(R.id.bustype_spinner);
+        Notification = findViewById(R.id.notification);
         availablebus = findViewById(R.id.availble_bus);
         Bookings = new JSONObject();
         Bookinglist = new JSONArray();
@@ -165,6 +166,41 @@ public class date_time extends AppCompatActivity {
 
 
 
+        Notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification",NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager manager = getSystemService(NotificationManager.class);
+                    manager.createNotificationChannel(channel);
+                }
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(date_time.this,"MyNotification")
+                        .setContentTitle("Swift Ride")
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setAutoCancel(true)
+                        .setContentText("Booking Done Sucessfully");
+
+                NotificationManagerCompat manager =  NotificationManagerCompat.from(date_time.this);
+                manager.notify(99,builder.build());
+
+
+//                NotificationCompat.Builder mbuilder = (NotificationCompat.Builder)
+//                        new NotificationCompat.Builder(getApplicationContext())
+//                                .setSmallIcon(R.drawable.ic_baseline_message_24,10)
+//                                .setContentTitle("Swift Ride")
+//                                .setContentText("Booking Done Successfully");
+//
+//                NotificationManager notificationManager = (NotificationManager)
+//                        getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(0,mbuilder.build());
+            }
+        });
+
+
+
         Booknow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,6 +247,8 @@ public class date_time extends AppCompatActivity {
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NotificationCompat.Builder builder = null;
+
+
                 Intent reviewbooking = new Intent(date_time.this, review_booking.class);
                 reviewbooking.putExtra("Bustype", Bustype.getSelectedItem().toString());
                 reviewbooking.putExtra("selectedbus", availablebus.getSelectedItem().toString());

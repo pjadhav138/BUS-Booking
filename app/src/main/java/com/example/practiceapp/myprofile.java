@@ -1,5 +1,6 @@
 package com.example.practiceapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -61,10 +62,36 @@ public class myprofile extends AppCompatActivity {
                 popup.setContentView(R.layout.pop_up_layout);
                 ImageView camera = popup.findViewById(R.id.camera);
                 ImageView galary = popup.findViewById(R.id.galary);
+
+
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.e(TAG, "onClick: Camera");
+              /*          Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera,104);
+                        Log.e(TAG, "onClick: Camera");  */
+
+                        if (ContextCompat.checkSelfPermission(myprofile.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(myprofile.this, new String[]{
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 105);
+                        }
+                        String path = Environment.getExternalStorageDirectory().getPath() + "/Download/File";
+                        File file = new File(path);
+                        if (!file.exists()) {
+                            file.mkdirs();
+                        }
+
+                        Log.e("TAG", "onClick: " + file.exists());
+
+                        image = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/File", "/" + System.currentTimeMillis() + ".jpg");
+                        Intent changephoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                        Log.e(TAG, "onClick: " + Uri.parse(image.getPath()));
+                        changephoto.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse(image.getPath()));
+
+                        startActivityForResult(changephoto, 104);
+
                         popup.dismiss();
                     }
                 });
@@ -81,36 +108,28 @@ public class myprofile extends AppCompatActivity {
                     }
                 });
                 popup.show();
-/*
-                if (ContextCompat.checkSelfPermission(myprofile.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(myprofile.this, new String[]{
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
-                    }, 105);
-                }
-                String path = Environment.getExternalStorageDirectory().getPath() + "/Download/File";
-                File file = new File(path);
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
 
-                Log.e("TAG", "onClick: " + file.exists());
 
-                image = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/File", "/" + System.currentTimeMillis() + ".jpg");
-                Intent changephoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                Log.e(TAG, "onClick: " + Uri.parse(image.getPath()));
-//                changephoto.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse(image.getPath()));
-
-                startActivityForResult(changephoto, 100);*/
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case 105:
+                Log.e(TAG,"test request code");
+                break;
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 100) {
+            if (requestCode == 104) {
                 Bitmap capturedimage = (Bitmap) data.getExtras().get("data");
                 profilephoto.setImageBitmap(capturedimage);
                 image = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/File", "/" + System.currentTimeMillis() + ".jpg");
