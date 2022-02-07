@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "443423823529",
+    "project_id": "swift-ride-22040",
+    "storage_bucket": "swift-ride-22040.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443423823529:android:387bf8fd8142aeade17bb8",
+        "android_client_info": {
+          "package_name": "com.example.practiceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443423823529-ruuneg4gh2ol4u68811sfcuotj75co7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgqiHXLV5cWcME3DMfhWogEL3rtYZBH7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443423823529-ruuneg4gh2ol4u68811sfcuotj75co7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

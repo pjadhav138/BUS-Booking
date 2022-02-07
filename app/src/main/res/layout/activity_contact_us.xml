@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/holo_orange_light"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+    </TextView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="@android:color/black"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/logo"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Swift Ride"
+            android:textSize="40dp"
+            android:textColor="@android:color/holo_green_light">
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+    </TextView>
+
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageButton android:visibility="gone"
+        android:id="@+id/ib_callus"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:autofillHints="call us"
+        android:src="@drawable/ic_call"
+        android:background="@drawable/bg_round">
+    </ImageButton>
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Contact Us As Per Your Availibilty :"
+    android:textSize="30dp"
+    android:layout_marginTop="20dp"
+    android:textStyle="bold"
+    android:typeface="serif"
+    android:layout_margin="10dp"/>
+
+    <Button
+        android:id="@+id/btn_sms"
+        android:layout_width="250dp"
+        android:layout_gravity="center"
+        android:layout_height="100dp"
+        android:text="Send Text Message"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="25dp"
+        android:background="@drawable/bg_round"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btn_mailus"
+        android:layout_width="250dp"
+        android:layout_gravity="center"
+        android:layout_height="100dp"
+        android:text="Send Mail"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="25dp"
+        android:background="@drawable/bg_round"
+        android:textColor="@android:color/white"/>
+    <Button
+        android:id="@+id/btn_callus"
+        android:layout_width="250dp"
+        android:layout_gravity="center"
+        android:layout_height="100dp"
+        android:text="Call Us"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="25dp"
+        android:background="@drawable/bg_round"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

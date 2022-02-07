@@ -1,12 +1,22 @@
 package com.example.practiceapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,12 +34,13 @@ import org.json.JSONObject;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class date_time extends AppCompatActivity {
-    Button selectdate, Booknow; //selecttime
+    Button selectdate, Booknow , Notification; //selecttime
     String source, destination;
     private String TAG = getClass().getSimpleName();
     String[] bustype = {"Select Bus Type", "AC Bus", "Non AC Bus"};
@@ -38,6 +49,8 @@ public class date_time extends AppCompatActivity {
     JSONObject Bookings;
     JSONArray Bookinglist;
     String User_id;
+    private String CHANNEL_ID_1 = "11111";
+    private String CHANNEL_ID_2="111122";
 
 
     @Override
@@ -45,6 +58,7 @@ public class date_time extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
         Bustype = findViewById(R.id.bustype_spinner);
+        Notification = findViewById(R.id.notification);
         availablebus = findViewById(R.id.availble_bus);
         Bookings = new JSONObject();
         Bookinglist = new JSONArray();
@@ -150,6 +164,43 @@ public class date_time extends AppCompatActivity {
 //        });
 //        ******
 
+
+
+        Notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification",NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager manager = getSystemService(NotificationManager.class);
+                    manager.createNotificationChannel(channel);
+                }
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(date_time.this,"MyNotification")
+                        .setContentTitle("Swift Ride")
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setAutoCancel(true)
+                        .setContentText("Booking Done Sucessfully");
+
+                NotificationManagerCompat manager =  NotificationManagerCompat.from(date_time.this);
+                manager.notify(99,builder.build());
+
+
+//                NotificationCompat.Builder mbuilder = (NotificationCompat.Builder)
+//                        new NotificationCompat.Builder(getApplicationContext())
+//                                .setSmallIcon(R.drawable.ic_baseline_message_24,10)
+//                                .setContentTitle("Swift Ride")
+//                                .setContentText("Booking Done Successfully");
+//
+//                NotificationManager notificationManager = (NotificationManager)
+//                        getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(0,mbuilder.build());
+            }
+        });
+
+
+
         Booknow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,15 +245,110 @@ public class date_time extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = null;
+
 
                 Intent reviewbooking = new Intent(date_time.this, review_booking.class);
                 reviewbooking.putExtra("Bustype", Bustype.getSelectedItem().toString());
                 reviewbooking.putExtra("selectedbus", availablebus.getSelectedItem().toString());
-                startActivity(reviewbooking);
+          /*      {
+                    String message = "Congratulation ...Booking Successfully Done.!";
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(date_time.this)
+                            .setSmallIcon(R.drawable.ic_baseline_message_24)
+                            .setContentTitle("Swift Booking")
+                            .setContentText("Booking Done.")
+                            .setAutoCancel(true);
+
+                    Intent notification = new Intent(date_time.this, Booking_Notification.class);
+                    notification.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    PendingIntent pendingintent = PendingIntent.getActivity(date_time.this, 100, notification, PendingIntent.FLAG_UPDATE_CURRENT);
+                    builder.setContentIntent(pendingintent);
+
+                    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    manager.notify(100, builder.build());
+                }*/
+
+//                Intent notification = new Intent(date_time.this, Booking_Notification.class);
+//                notification.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                PendingIntent pendingintent = PendingIntent.getActivity(date_time.this, 100, notification, PendingIntent.FLAG_UPDATE_CURRENT);
+//                createNotificationChannel(pendingintent);
+//                startActivity(reviewbooking);
+
+                Intent intent = new Intent(date_time.this, Booking_Notification.class);
+
+                // FLAG_UPDATE_CURRENT specifies that if a previous
+                // PendingIntent already exists, then the current one
+                // will update it with the latest intent
+                // 0 is the request code, using it later with the
+                // same method again will get back the same pending
+                // intent for future reference
+                // intent passed here is to our afterNotification class
+                PendingIntent pendingIntent = PendingIntent.getActivity(date_time.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationChannel notificationChannel;
+                // RemoteViews are used to use the content of
+                // some different layout apart from the current activity layout
+//                val contentView = RemoteViews(packageName, R.layout.activity_after_notification)
+                builder = new NotificationCompat.Builder(date_time.this)
+                        .setSmallIcon(R.drawable.ic_baseline_message_24)
+                        .setContentTitle("Swift Booking")
+                        .setContentText("Booking Done.")
+                        .setAutoCancel(true);
+
+                // checking if android version is greater than oreo(API 26) or not
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    notificationChannel = new NotificationChannel("11111", "description", NotificationManager.IMPORTANCE_HIGH);
+                    notificationChannel.enableLights(true);
+                    notificationChannel.setLightColor( Color.GREEN);
+                    notificationChannel.enableVibration(false);
+                    manager.createNotificationChannel(notificationChannel);
+                    builder = new NotificationCompat.Builder(date_time.this)
+                            .setSmallIcon(R.drawable.ic_baseline_message_24)
+                            .setContentTitle("Swift Booking")
+                            .setContentText("Booking Done.")
+                            .setAutoCancel(true);
+                } else {
+
+                }
+                manager.notify(1234, builder.build());
 
             }
         });
 
 
     }
+
+    private void createNotificationChannel(PendingIntent pendingintent){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_1)
+                .setSmallIcon(R.drawable.ic_baseline_message_24)
+                .setContentTitle("textTitle")
+                .setContentText("textContent")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID_2)
+                .setSmallIcon(R.drawable.ic_baseline_message_24)
+//                .setLargeIcon(thumb)
+                .setContentTitle("Title")
+                .setContentText("Text")
+                .setStyle(new NotificationCompat.BigPictureStyle()
+//                        .bigPicture(imgUrl)
+                        .bigLargeIcon(null))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingintent)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+/*        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notification.setSmallIcon(playPauseBtn);
+            notification.setColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            notification.setSmallIcon(playPauseBtn);
+        }*/
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+        int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        notificationManager.notify(m,notification.build());
+        notificationManager.notify(m,builder.build());
+    }
+
+
 }

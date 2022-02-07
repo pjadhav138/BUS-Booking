@@ -6,6 +6,9 @@ public class ListItem {
     String date;
     String busType;
     String time;
+    String userid;
+
+
 
     public ListItem(String source, String destination, String date, String busType, String time) {
         this.source = source;
@@ -13,6 +16,23 @@ public class ListItem {
         this.date = date;
         this.busType = busType;
         this.time = time;
+    }
+
+    public ListItem(String source, String destination, String date, String busType, String time, String userid) {
+        this.source = source;
+        this.destination = destination;
+        this.date = date;
+        this.busType = busType;
+        this.time = time;
+        this.userid = userid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getSource() {

@@ -39,18 +39,15 @@ public class Form extends AppCompatActivity {
     JSONObject genderObj;
     JSONObject Userdetails;
     boolean terms = false;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
+  SessionManage session;
 //    ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
-        preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        editor = preferences.edit();
-        boolean isloggedIn = preferences.getBoolean("Is_login", false);
-        if (isloggedIn) {
+       session = new SessionManage(Form.this);
+        if (session.getLoginStatus()) {
             startActivity(new Intent(Form.this, HomeMain.class));
             finish();
         }
@@ -127,9 +124,6 @@ public class Form extends AppCompatActivity {
                         genderObj.put("Gender", "Female");
                     }
 
-                    editor.putString("genderObj", genderObj.toString());
-                    editor.commit();
-                    String s = preferences.getString("genderObj", "{}");
 
 
                 } catch (JSONException e) {
