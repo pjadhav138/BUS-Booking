@@ -11,6 +11,7 @@
     android:layout_height="match_parent">
 
   <ImageView
+      android:visibility="gone"
       android:id="@+id/logout"
       android:layout_width="?attr/actionBarSize"
       android:layout_height="?attr/actionBarSize"
@@ -23,7 +24,7 @@
   <TextView
       android:layout_width="300dp"
       android:layout_height="150dp"
-      android:text="WELCOME"
+      android:text="Select Bus"
       android:gravity="center"
       android:textSize="60dp"
       android:layout_gravity="center"

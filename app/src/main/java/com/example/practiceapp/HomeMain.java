@@ -16,6 +16,8 @@ public class HomeMain extends AppCompatActivity {
     Button booknow,viewbooking;
     TextView Logo;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
