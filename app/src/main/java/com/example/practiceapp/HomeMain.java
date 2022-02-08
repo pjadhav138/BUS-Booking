@@ -18,6 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class HomeMain extends AppCompatActivity {
 
     Button booknow, viewbooking, btn_viewpager;
@@ -43,6 +51,26 @@ public class HomeMain extends AppCompatActivity {
         btn_viewpager = findViewById(R.id.view_pager);
         Typeface font = Typeface.createFromAsset(getAssets(), "Creepster-Regular.ttf");
         Logo.setTypeface(font);
+        FirebaseFirestore db = FirebaseU
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", "Ada");
+        user.put("last", "Lovelace");
+        user.put("born", 1815);
+        db.collection("Myapp").add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.e(TAG, "onSuccess: "+documentReference.getId() );
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "onFailure: "+e.getMessage() );
+                    }
+                });
+
+
 
        /*
        // on click listener previously used but now visibility gone and used in menu item option menu below down thier
@@ -114,9 +142,9 @@ public class HomeMain extends AppCompatActivity {
                 startActivity(booknow);
                 return true;
 
-                case R.id.menu_viewbooking:
-                    Intent viewbooking = new Intent(HomeMain.this, view_bookings.class);
-                    startActivity(viewbooking);
+            case R.id.menu_viewbooking:
+                Intent viewbooking = new Intent(HomeMain.this, view_bookings.class);
+                startActivity(viewbooking);
                 return true;
 
             case R.id.menu_steps:
@@ -139,7 +167,7 @@ public class HomeMain extends AppCompatActivity {
                 finish();
                 return true;
 
-                case R.id.logout:
+            case R.id.logout:
                 startActivity(new Intent(HomeMain.this, loginactivity.class));
                 finish();
                 session.setLoginStatus(false);

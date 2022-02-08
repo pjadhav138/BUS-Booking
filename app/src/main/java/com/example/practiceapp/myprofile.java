@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +22,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,13 +49,18 @@ public class myprofile extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         name = findViewById(R.id.username);
         email = findViewById(R.id.mail_address);
-
-
-        if (ContextCompat.checkSelfPermission(myprofile.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(myprofile.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 100);
+        SharedPreferences preferences = getSharedPreferences("MyApp",MODE_PRIVATE);
+       String imagePath =  preferences.getString("imagePath","");
+        if (!imagePath.isEmpty()){
+           Bitmap bitmap =  BitmapFactory.decodeFile(imagePath);
+           profilephoto.setImageBitmap(bitmap);
         }
+
+            if (ContextCompat.checkSelfPermission(myprofile.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(myprofile.this, new String[]{
+                        Manifest.permission.CAMERA
+                }, 100);
+            }
 
         changephoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +84,7 @@ public class myprofile extends AppCompatActivity {
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
                             }, 105);
                         }
-                        String path = Environment.getExternalStorageDirectory().getPath() + "/Download/File";
+                        String path = Environment.getExternalStorageDirectory().getPath() + "/Download/File/";
                         File file = new File(path);
                         if (!file.exists()) {
                             file.mkdirs();
@@ -88,7 +96,7 @@ public class myprofile extends AppCompatActivity {
                         Intent changephoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                         Log.e(TAG, "onClick: " + Uri.parse(image.getPath()));
-                        changephoto.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse(image.getPath()));
+//                        changephoto.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
 
                         startActivityForResult(changephoto, 104);
 
@@ -102,7 +110,7 @@ public class myprofile extends AppCompatActivity {
 
                         Intent galary = new Intent(Intent.ACTION_GET_CONTENT);
                         galary.setType("image/*");
-                        startActivityForResult(galary,106);
+                        startActivityForResult(galary, 106);
 
                         popup.dismiss();
                     }
@@ -118,9 +126,9 @@ public class myprofile extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode){
+        switch (requestCode) {
             case 105:
-                Log.e(TAG,"test request code");
+                Log.e(TAG, "test request code");
                 break;
         }
     }
@@ -150,8 +158,8 @@ public class myprofile extends AppCompatActivity {
                 }
 
             }
-            if (requestCode==106){
-                Log.e(TAG, "onActivityResult: "+data.getExtras() );
+            if (requestCode == 106) {
+                Log.e(TAG, "onActivityResult: " + data.getExtras());
                 profilephoto.setImageURI(data.getData());
                 SharedPreferences preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
