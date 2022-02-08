@@ -34,6 +34,8 @@ public class HomeMain extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
     SessionManage session;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
