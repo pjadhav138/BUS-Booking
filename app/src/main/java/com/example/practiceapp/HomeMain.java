@@ -18,10 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +37,6 @@ public class HomeMain extends AppCompatActivity {
     Toolbar toolbar;
     private String TAG = getClass().getSimpleName();
     SessionManage session;
-
 
 
     @Override
@@ -48,30 +51,67 @@ public class HomeMain extends AppCompatActivity {
         Logo = findViewById(R.id.logo);
 
         session = new SessionManage(HomeMain.this);
-
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         btn_viewpager = findViewById(R.id.view_pager);
         Typeface font = Typeface.createFromAsset(getAssets(), "Creepster-Regular.ttf");
         Logo.setTypeface(font);
-        FirebaseFirestore db = FirebaseU
+
         Map<String, Object> user = new HashMap<>();
         user.put("first", "Ada");
         user.put("last", "Lovelace");
         user.put("born", 1815);
-        db.collection("Myapp").add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+        db.collection("/MyApp")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.e(TAG, "onSuccess: "+documentReference.getId() );
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure: "+e.getMessage() );
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.e(TAG, document.getId() + " => " + document.getData());
+                                if (document.getId().equals("users")){
+                                    Log.e(TAG, "MyApp: "+document.getData().get("test2") );
+                                }
+                            }
+                        } else {
+                            Log.e(TAG, "Error getting documents.", task.getException());
+                        }
                     }
                 });
-
+        db.collection("/MyApp/users/user/pankaj/orders")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.e(TAG, document.getId() + " => " + document.getData());
+                                if (document.getId().equals("users")){
+                                    Log.e(TAG, "MyApp/users/user/pankaj/orders: "+document.getData().get("test2") );
+                                }
+                            }
+                        } else {
+                            Log.e(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+        Map<String,Object> map = new HashMap<>();
+        map.put("test2",user);
+        db.collection("MyApp").document("users").update("test3",map);
+/*
+db.collection("MyApp").document("users").set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+    @Override
+    public void onSuccess(Void documentReference) {
+        Log.e(TAG, "onSuccess: "+documentReference );
+    }
+}).addOnFailureListener(new OnFailureListener() {
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        Log.e(TAG, "onFailure: "+e.getMessage() );
+    }
+});
+*/
 
 
        /*
