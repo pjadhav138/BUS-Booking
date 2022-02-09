@@ -34,15 +34,14 @@
     </TextView>
 
     <Button
-        android:visibility="gone"
-        android:id="@+id/book_now"
+        android:id="@+id/Google_Map"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="40dp"
-        android:text="Book  Now">
+        android:text="Google Map">
     </Button>
 
     <Button

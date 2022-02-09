@@ -27,6 +27,9 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,12 +38,15 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
 public class date_time extends AppCompatActivity {
-    Button selectdate, Booknow , Notification; //selecttime
+    Button selectdate, Booknow, Notification; //selecttime
     String source, destination;
     private String TAG = getClass().getSimpleName();
     String[] bustype = {"Select Bus Type", "AC Bus", "Non AC Bus"};
@@ -50,7 +56,7 @@ public class date_time extends AppCompatActivity {
     JSONArray Bookinglist;
     String User_id;
     private String CHANNEL_ID_1 = "11111";
-    private String CHANNEL_ID_2="111122";
+    private String CHANNEL_ID_2 = "111122";
 
 
     @Override
@@ -165,26 +171,25 @@ public class date_time extends AppCompatActivity {
 //        ******
 
 
-
         Notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification",NotificationManager.IMPORTANCE_DEFAULT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification", NotificationManager.IMPORTANCE_DEFAULT);
                     NotificationManager manager = getSystemService(NotificationManager.class);
                     manager.createNotificationChannel(channel);
                 }
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(date_time.this,"MyNotification")
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(date_time.this, "MyNotification")
                         .setContentTitle("Swift Ride")
                         .setSmallIcon(R.drawable.ic_baseline_message_24)
                         .setAutoCancel(true)
                         .setContentText("Booking Done Sucessfully");
 
-                NotificationManagerCompat manager =  NotificationManagerCompat.from(date_time.this);
-                manager.notify(99,builder.build());
+                NotificationManagerCompat manager = NotificationManagerCompat.from(date_time.this);
+                manager.notify(99, builder.build());
 
 
 //                NotificationCompat.Builder mbuilder = (NotificationCompat.Builder)
@@ -198,7 +203,6 @@ public class date_time extends AppCompatActivity {
 //                notificationManager.notify(0,mbuilder.build());
             }
         });
-
 
 
         Booknow.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +225,8 @@ public class date_time extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
 
 
-                User_id = preferences.getString("User_Id", "");
-                Log.e(TAG, "Userid: " + User_id);
+                User_id = preferences.getString("User_id", "");
+                Log.e(TAG, "User_id: " + User_id);
 
                 try {
                     Bookings.put("User_id", User_id);
@@ -231,6 +235,23 @@ public class date_time extends AppCompatActivity {
                     Bookings.put("Date", selectdate.getText().toString());
                     Bookings.put("Bus_Type", Bustype.getSelectedItem().toString());
                     Bookings.put("Bus_Time", availablebus.getSelectedItem().toString());
+
+
+                    //saving all the booking values in book map
+                    Iterator<String> iterator= Bookings.keys();
+                    Map<String,Object> book= new HashMap<>();
+                   while (iterator.hasNext()){
+                       String key = iterator.next();
+                       book.put(key,Bookings.get(key));
+                   }
+
+
+                   // uploading the book map onto server
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://swift-ride-22040-default-rtdb.firebaseio.com/");
+                    DatabaseReference Done_Booking = database.getReferenceFromUrl("https://swift-ride-22040-default-rtdb.firebaseio.com/User/"+Bookings.getString("User_id")+"/order");
+
+                    Done_Booking.updateChildren(book);
 
 
                     Bookinglist = new JSONArray(preferences.getString("Bookings", "[]"));
@@ -244,6 +265,46 @@ public class date_time extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+//                ****************
+
+
+  /*
+
+             upload  whole booking list to firebase data base
+
+
+             try {
+                  FirebaseDatabase database = FirebaseDatabase.getInstance("https://swift-ride-22040-default-rtdb.firebaseio.com/");
+                  DatabaseReference Bookings = null;
+                  for (int i = 0; i < Bookinglist.length(); i++) {
+                      String userid = Bookinglist.getJSONObject(i).getString("User_id");
+                      String Source = Bookinglist.getJSONObject(i).getString("Source");
+                      String Destination = Bookinglist.getJSONObject(i).getString("Destination");
+                      String Date = Bookinglist.getJSONObject(i).getString("Date");
+                      String Bus_Type = Bookinglist.getJSONObject(i).getString("Bus_Type");
+                      String Bus_Time = Bookinglist.getJSONObject(i).getString("Bus_Time");
+                      Map<String,Object> map = new HashMap<>();
+                      Map<String,Object> map1 = new HashMap<>();
+                      map.put("User_id",userid);
+                      map.put("Source",Source);
+                      map.put("Destination",Destination);
+                      map.put("Date",Date);
+                      map.put("Bus_Type",Bus_Type);
+                      map.put("Bus_Time",Bus_Time);
+                      map1.put(Date+"_"+Bus_Time,map);
+
+                      Bookings = database.getReferenceFromUrl("https://swift-ride-22040-default-rtdb.firebaseio.com/User/"+Bookinglist.getJSONObject(i).getString("User_id")+"/order");
+                      Bookings.updateChildren(map1);
+                  }
+
+              } catch (JSONException e) {
+                  e.printStackTrace();
+              }
+*/
+//                ****************
+
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NotificationCompat.Builder builder = null;
@@ -273,7 +334,6 @@ public class date_time extends AppCompatActivity {
 //                notification.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                PendingIntent pendingintent = PendingIntent.getActivity(date_time.this, 100, notification, PendingIntent.FLAG_UPDATE_CURRENT);
 //                createNotificationChannel(pendingintent);
-//                startActivity(reviewbooking);
 
                 Intent intent = new Intent(date_time.this, Booking_Notification.class);
 
@@ -299,7 +359,7 @@ public class date_time extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     notificationChannel = new NotificationChannel("11111", "description", NotificationManager.IMPORTANCE_HIGH);
                     notificationChannel.enableLights(true);
-                    notificationChannel.setLightColor( Color.GREEN);
+                    notificationChannel.setLightColor(Color.GREEN);
                     notificationChannel.enableVibration(false);
                     manager.createNotificationChannel(notificationChannel);
                     builder = new NotificationCompat.Builder(date_time.this)
@@ -311,6 +371,7 @@ public class date_time extends AppCompatActivity {
 
                 }
                 manager.notify(1234, builder.build());
+                startActivity(reviewbooking);
 
             }
         });
@@ -318,7 +379,7 @@ public class date_time extends AppCompatActivity {
 
     }
 
-    private void createNotificationChannel(PendingIntent pendingintent){
+    private void createNotificationChannel(PendingIntent pendingintent) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_1)
                 .setSmallIcon(R.drawable.ic_baseline_message_24)
@@ -346,8 +407,8 @@ public class date_time extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
         int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
-        notificationManager.notify(m,notification.build());
-        notificationManager.notify(m,builder.build());
+        notificationManager.notify(m, notification.build());
+        notificationManager.notify(m, builder.build());
     }
 
 

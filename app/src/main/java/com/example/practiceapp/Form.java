@@ -1,5 +1,7 @@
 package com.example.practiceapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,10 +25,23 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Form extends AppCompatActivity {
     AutoCompleteTextView country;
@@ -39,14 +54,15 @@ public class Form extends AppCompatActivity {
     JSONObject genderObj;
     JSONObject Userdetails;
     boolean terms = false;
-  SessionManage session;
+    SessionManage session;
+    String TAG = getClass().getSimpleName();
 //    ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
-       session = new SessionManage(Form.this);
+        session = new SessionManage(Form.this);
         if (session.getLoginStatus()) {
             startActivity(new Intent(Form.this, HomeMain.class));
             finish();
@@ -125,7 +141,6 @@ public class Form extends AppCompatActivity {
                     }
 
 
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -186,18 +201,59 @@ public class Form extends AppCompatActivity {
 
                         SharedPreferences preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        String registerdat = preferences.getString("UserDetails","{}");
+                        String registerdat = preferences.getString("UserDetails", "{}");
                         JSONObject jsRegister = new JSONObject(registerdat);
                         jsRegister.put(email.getText().toString(), Userdetails);
                         editor.putString("UserDetails", jsRegister.toString());
                         editor.putBoolean("Is_login", true);
-                        editor.putString("User_Id",email.getText().toString());
+                        editor.putString("User_Id", email.getText().toString());
                         editor.commit();
                         String s = preferences.getString("Userdetails", "{}");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    Log.e(TAG, "USERDETAILS: " + Userdetails.toString());
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://swift-ride-22040-default-rtdb.firebaseio.com/");
+                    DatabaseReference Login = database.getReference("User");
+
+                    User userdetails = null;
+
+                    Map<String, Object> map = new HashMap<>();
+                    Map<String, Object> map1 = new HashMap<>();
+                    Iterator<String> iterator = Userdetails.keys();
+                    while (iterator.hasNext()) {
+                        String key = iterator.next();
+                        try {
+                            map.put(key, Userdetails.get(key));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.e(TAG, "onClick: " + map);
+                    }
+                    try {
+                        map1.put(Userdetails.getString("Name"), map);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Login.updateChildren(map1);
+
+                    ValueEventListener postListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.e(TAG, "onDataChange: " + dataSnapshot.child("order"));
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Getting Post failed, log a message
+                            Log.e(TAG, "loadPost:onCancelled", databaseError.toException());
+                        }
+                    };
+                    Login.addValueEventListener(postListener);
 
 
                     Intent gotohome = new Intent(Form.this, Home.class);
