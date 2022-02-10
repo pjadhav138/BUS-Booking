@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsPolygon" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/googlemapbehaviour"
+        android:orientation="vertical"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_alignParentBottom="true"
+        >
+
+        <CheckBox
+            android:id="@+id/checkbox_polygon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fill Polygon"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Polygon Color"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <SeekBar
+            android:id="@+id/seek_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@android:color/holo_red_dark"
+            android:thumbTint="@android:color/holo_red_dark"
+            android:layout_marginTop="5dp"/>
+
+        <SeekBar
+            android:id="@+id/seek_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@android:color/holo_green_dark"
+            android:thumbTint="@android:color/holo_green_dark"
+            android:layout_marginTop="5dp"/>
+
+
+        <SeekBar
+            android:id="@+id/seek_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:progressTint="@android:color/holo_blue_dark"
+            android:thumbTint="@android:color/holo_blue_dark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Draw"
+                android:id="@+id/draw_polygon"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:id="@+id/Clear_polygon"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

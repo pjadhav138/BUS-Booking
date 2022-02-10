@@ -45,16 +45,35 @@
     </Button>
 
     <Button
-        android:visibility="gone"
-        android:id="@+id/view_booking"
-        android:layout_marginTop="40dp"
+        android:id="@+id/Polygon"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
-        android:layout_gravity="center"
         android:layout_height="70dp"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textSize="40dp"
-        android:text="View Bookings">
+        android:text="Map Polygon">
+    </Button><Button
+        android:id="@+id/Polyline"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="Map PolyLine">
     </Button>
+
+    <Button
+        android:id="@+id/view_booking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="View Bookings"
+        android:textSize="40dp"
+        android:visibility="gone"></Button>
 
     <Button
         android:visibility="gone"

@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class HomeMain extends AppCompatActivity {
 
-    Button googlemap, viewbooking, btn_viewpager;
+    Button googlemap,mappolygon,mappolyline, viewbooking, btn_viewpager;
     TextView Logo;
     Toolbar toolbar;
     private String TAG = getClass().getSimpleName();
@@ -46,6 +46,8 @@ public class HomeMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_main);
         googlemap = findViewById(R.id.Google_Map);
+        mappolygon = findViewById(R.id.Polygon);
+        mappolyline = findViewById(R.id.Polyline);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -65,6 +67,23 @@ public class HomeMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent googlemap = new Intent(HomeMain.this, com.example.practiceapp.googlemap.class);
                 startActivity(googlemap);
+            }
+        });
+
+        mappolygon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent polygon = new Intent(HomeMain.this, MapsPolygon.class);
+                startActivity(polygon);
+            }
+        });
+
+
+        mappolyline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent polyline = new Intent(HomeMain.this, MapsPolyline.class);
+                startActivity(polyline);
             }
         });
 
