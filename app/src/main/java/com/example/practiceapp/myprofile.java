@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,6 +25,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,8 +44,15 @@ public class myprofile extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
     CircleImageView profilephoto;
     Button changephoto, logout;
-    TextView name, email;
+    TextView Name, Email;
     File image;
+    String UserDetails;
+    JSONObject userdetails;
+    SessionManage session;
+
+
+    SharedPreferences preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +61,43 @@ public class myprofile extends AppCompatActivity {
         profilephoto = findViewById(R.id.imageview_profile_photo);
         changephoto = findViewById(R.id.btn_change_photo);
         logout = findViewById(R.id.logout);
-        name = findViewById(R.id.username);
-        email = findViewById(R.id.mail_address);
-        SharedPreferences preferences = getSharedPreferences("MyApp",MODE_PRIVATE);
+        Name = findViewById(R.id.username);
+        Email = findViewById(R.id.mail_address);
+        preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
+
+
+
+
+//        SharedPreferences.Editor editor = preferences.edit();
+
+
+        UserDetails = preferences.getString("UserDetails", "{}");
+        try {
+            userdetails = new JSONObject(UserDetails);
+         JSONObject currentUSerDetails =  userdetails.getJSONObject(preferences.getString("User_Id","{}"));
+        String name=  currentUSerDetails.getString("Name");
+        String email=  currentUSerDetails.getString("Email");
+
+        Name.setText(name);
+        Email.setText(email);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        session = new SessionManage(myprofile.this);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(myprofile.this, loginactivity.class));
+                finish();
+                session.setLoginStatus(false);
+            }
+        });
+
+
+
        String imagePath =  preferences.getString("imagePath","");
         if (!imagePath.isEmpty()){
            Bitmap bitmap =  BitmapFactory.decodeFile(imagePath);
@@ -158,14 +207,47 @@ public class myprofile extends AppCompatActivity {
 
             }
             if (requestCode == 106) {
-                Log.e(TAG, "onActivityResult: " + data.getExtras());
-                profilephoto.setImageURI(data.getData());
+                Log.e(TAG, "onActivityResult: " + getPath(data.getData()));
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(getPath(data.getData()),options);
+
+                bitmap = Bitmap.createScaledBitmap(bitmap,profilephoto.getWidth(),profilephoto.getHeight(),true);
+
+                profilephoto.setImageBitmap(bitmap);
                 SharedPreferences preferences = getSharedPreferences("MyApp", MODE_PRIVATE);
+                Log.e(TAG, "onActivityResult: "+data.getData() );
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("imagePath", data.getData().toString());
+                editor.putString("imagePath", getPath(data.getData()));
                 Uri.parse(data.getData().toString());
                 editor.commit();
+
+
+
+
             }
         }
+    }
+
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            // TODO perform some logging or show user feedback
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(column_index);
+            cursor.close();
+            return path;
+        }
+        // this is our fallback here
+        return uri.getPath();
     }
 }

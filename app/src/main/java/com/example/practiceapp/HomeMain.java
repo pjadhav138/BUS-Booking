@@ -1,6 +1,7 @@
 package com.example.practiceapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,6 +19,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +34,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,6 +127,8 @@ public class HomeMain extends AppCompatActivity {
         };
         myRef.addValueEventListener(postListener);
 
+        testVolley();
+
        /*
        // on click listener previously used but now visibility gone and used in menu item option menu below down thier
 
@@ -146,6 +160,52 @@ public class HomeMain extends AppCompatActivity {
 
         */
     }
+
+   /* private void testVolley() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.1.210/api/api.json", null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e(TAG, "onResponse: "+response.toString() );
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: "+error.getMessage() );
+            }
+        });
+        Volley.newRequestQueue(HomeMain.this).add(jsonObjectRequest);
+    }
+
+    */
+
+    private void testVolley() {
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, "http://192.168.1.210/api/posttest.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "onResponse: "+response );
+            }
+
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "onErrorResponse: "+error.getMessage() );
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<>();
+                map.put("Name","Rushikesh");
+                map.put("Last","Shingan");
+                return map;
+            }
+        };
+        Volley.newRequestQueue(HomeMain.this).add(jsonArrayRequest);
+    }
+
+
 
     @Override
     public void onBackPressed() {

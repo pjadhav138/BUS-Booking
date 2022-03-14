@@ -1,5 +1,6 @@
 package com.example.practiceapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -27,6 +28,12 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -84,7 +91,7 @@ public class date_time extends AppCompatActivity {
         Booknow = findViewById(R.id.booknow);
 
         try {
-            busdata = new JSONObject("{\"AC_Bus\":{\"1-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"2-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"3-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"4-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\",\"08:30 PM\"],\"5-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"]},\"Non_AC_Bus\":{\"1-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"2-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"3-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"4-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\",\"08:30 PM\"],\"5-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"]}}");
+            busdata = new JSONObject("{\"AC_Bus\":{\"2021-11-1\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"2-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"3-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"4-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"01:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\",\"08:30 PM\"],\"5-11-2021\":[\"10:00 AM\",\"11:00  AM\",\"12:00 PM\",\"05:30 PM\",\"06:30 PM\",\"07:00 PM\",\"08:00 PM\"]},\"Non_AC_Bus\":{\"1-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"2-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"3-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"],\"4-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\",\"08:30 PM\"],\"5-11-2021\":[\"10:00 AM\",\"11:30  AM\",\"01:00 PM\",\"05:30 PM\",\"07:00 PM\",\"08:00 PM\"]}}");
             Log.e(TAG, "onCreate: " + busdata);
 
         } catch (JSONException e) {
@@ -107,7 +114,7 @@ public class date_time extends AppCompatActivity {
                             Bustype.setSelection(0);
                         }
                         int exactmonth = month + 1;
-                        selectdate.setText(dayOfMonth + "-" + (exactmonth) + "-" + year);
+                        selectdate.setText(year + "-" + (exactmonth) + "-" + dayOfMonth);
                         Log.e("TAG", "onDateSet:" + selectdate.getText().toString());
 
                     }
@@ -225,8 +232,8 @@ public class date_time extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
 
 
-                User_id = preferences.getString("User_id", "");
-                Log.e(TAG, "User_id: " + User_id);
+                User_id = preferences.getString("User_Id", "");
+                Log.e(TAG, "User_id: " +User_id);
 
                 try {
                     Bookings.put("User_id", User_id);
@@ -237,7 +244,7 @@ public class date_time extends AppCompatActivity {
                     Bookings.put("Bus_Time", availablebus.getSelectedItem().toString());
 
 
-                    //saving all the booking values in book map
+                    //saving all thebooking values in book map
                     Iterator<String> iterator= Bookings.keys();
                     Map<String,Object> book= new HashMap<>();
                    while (iterator.hasNext()){
@@ -246,12 +253,41 @@ public class date_time extends AppCompatActivity {
                    }
 
 
+                   StringRequest request = new StringRequest(Request.Method.POST, "http://192.168.1.211/api/saveBooking.php", new Response.Listener<String>() {
+                       @Override
+                       public void onResponse(String response) {
+                           Log.e(TAG, "onResponse: "+response );
+                       }
+                   }, new Response.ErrorListener() {
+                       @Override
+                       public void onErrorResponse(VolleyError error) {
+                           Log.e(TAG, "onErrorResponse: "+error.getMessage() );
+                       }
+                   }){
+                       @Nullable
+                       @Override
+                       protected Map<String, String> getParams() throws AuthFailureError {
+                           Map<String,String> map = new HashMap<>();
+                           map.put("username",User_id);
+                           map.put("source",source);
+                           map.put("destination",destination);
+                           map.put("date",selectdate.getText().toString());
+                           map.put("time",availablebus.getSelectedItem().toString());
+                           map.put("busType",Bustype.getSelectedItem().toString());
+                           return map;
+                       }
+                   };
+
+                   Volley.newRequestQueue(date_time.this).add(request);
+/*
+
                    // uploading the book map onto server
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance("https://swift-ride-22040-default-rtdb.firebaseio.com/");
                     DatabaseReference Done_Booking = database.getReferenceFromUrl("https://swift-ride-22040-default-rtdb.firebaseio.com/User/"+Bookings.getString("User_id")+"/order");
 
                     Done_Booking.updateChildren(book);
+*/
 
 
                     Bookinglist = new JSONArray(preferences.getString("Bookings", "[]"));

@@ -177,4 +177,39 @@ public class MapsPolygon extends FragmentActivity implements OnMapReadyCallback,
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
+    //
+
+
+
+    public boolean IsPointInPolygon(LatLng p, LatLng[] polygon)
+    {
+        double minX = polygon[0].latitude;
+        double maxX = polygon[0].latitude;
+        double minY = polygon[0].longitude;
+        double maxY = polygon[0].longitude;
+        for (int i = 1; i < polygon.length; i++)
+        {
+            LatLng q = polygon[i];
+            minX = Math.min(q.latitude, minX);
+            maxX = Math.max(q.latitude, maxX);
+            minY = Math.min(q.longitude, minY);
+            maxY = Math.max(q.longitude, maxY);
+        }
+        if (p.latitude < minX || p.latitude > maxX || p.longitude < minY || p.longitude > maxY)
+        {
+            return false;
+        }
+        // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
+        boolean inside = false;
+        for (int i = 0, j = polygon.length - 1; i < polygon.length; j = i++)
+        {
+            if ((polygon[i].longitude > p.longitude) != (polygon[j].longitude > p.longitude) &&
+                    p.latitude < (polygon[j].latitude - polygon[i].latitude) * (p.longitude - polygon[i].longitude) / (polygon[j].longitude - polygon[i].longitude) + polygon[i].latitude)
+            {
+                inside = !inside;
+            }
+        }
+        return inside;
+    }
 }
